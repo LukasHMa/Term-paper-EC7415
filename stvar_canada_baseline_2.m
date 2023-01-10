@@ -1,6 +1,6 @@
 % Author: Lukas Ma
 % 
-% Date: 2023-01-09
+% Date: 2023-01-10
 %
 % This script performs the following: 
 % (1) Calibration of smoothing parameter gamma 
@@ -29,21 +29,22 @@ data_lib = readtable("./Data/data_quarterly_clean_precovid.csv"); %load precovid
 %% Preparation
 
 % Percentage of time the economy is in recession according to C.D. Howe
-% institute
+% institute Data_BCC_Aug2021.xlsx
 
 % Define an array of recession (quarter)
 
-CAN_peak_q = ['1981-07-01';'1990-01-01';'2008-10-01';'2020-01-01'];
+CAN_peak_q = ['1982-04-01';'1990-04-01';'2008-10-01';'2020-01-01']; %Use the 1982Q2 as starting period
 
-CAN_trough_q = ['1982-10-01';'1992-04-01';'2009-04-01';'2020-04-01'];
+CAN_trough_q = ['1983-01-01';'1992-07-01';'2009-07-01';'2020-04-01']; %Adjusted to include the quarter in which trough occured. E.g. through occured in 1982Q4 -> Adjust by one quarter to 1983Q1
 
 CAN_recession_q = [datetime(CAN_peak_q), datetime(CAN_trough_q)];
 
-quarters = round(days(CAN_recession_q(1:4,2) - CAN_recession_q(1:4,1)) ./ 91); % Calculate the number of quarters in recession
+quarters = round(days(CAN_recession_q(1:4,2) - CAN_recession_q(1:4,1)) ./ 91); % Calculate the number of quarters in recession, plus 3 to include the quarter in which through occured. 
 
 share_recession = (sum(quarters)-1)/size(data_lib,1); % Calculate the share of the time the economy is in recession (Pre-covid)
 
 %share_recession = sum(quarters)/size(data_lib,1); % Calculate the share of the time the economy is in recession (full-sample)
+
 
 %% Calibration of the transition variable
 
@@ -167,6 +168,7 @@ state.Fs = F_z; %transition probability
 % MCMC settings
 nboot = 30000; %The first 20% will be discarded
 alpha = 90;
+%alpha = 70; %alternative  
 
 exdata = []; 
 

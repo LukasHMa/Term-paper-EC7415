@@ -1,7 +1,7 @@
 % Codes to produce the results presented in 
 % Term paper EC7415: Uncertainty shocks and unemployment dynamics in Canada
 %
-% Current version: 2023-01-09
+% Current version: 2023-01-10
 % -----------------------------------------------------------------------
 % Uncomment to run a particular script. The default setting will only run
 % the data preparation, transformation, and the baseline analysis 1
@@ -37,10 +37,14 @@ data_transform_quarter % Tranform the data
 %figure_1_recession %Plot Figure 1 of the paper
 
 %--------------------------------------------------------------------------
-%Data analysis (baseline models)
+% Data analysis (baseline models)
+% --
+% The default setting is a 1 StD shock to US uncertainty, to evaluate a
+% shock to Canadian uncertainty, use "shockpos = 5;" in the the
+% Parameterization section of the script.
 %--------------------------------------------------------------------------
 
-stvar_canada_baseline_1 %Estimate a VAR and STVAR according to Eq.(5). Default setting: US uncertainty shock
+stvar_canada_baseline_1 %Estimate a VAR and STVAR according to Eq.(5). Default setting: US uncertainty shock;
 
 %stvar_canada_baseline_2 %Estimate a VAR and STVAR according to Eq.(6). Default setting: US uncertainty shock
 
